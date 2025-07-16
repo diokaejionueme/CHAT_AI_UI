@@ -54,6 +54,36 @@ export const useChatStore = defineStore('chat', () => {
         }
     };
 
+    //send new message to AI
+
+    const sendMessage = async (message: string) => {
+        if(!message.trim() || !userStore.userId) return;
+
+        messages.value.push({role: 'user', content: message});
+
+        isLoading.value= true;
+            try {
+                const {data} = await axios.post(
+                `${import.meta.env.VITE_API_URL}/chat`, 
+                {
+                    message, 
+                    userId: userStore.userId
+                }
+            );
+
+                messages.value.push({role: 'ai', content: data.reply})
+            } catch (error) {
+                console.error('Error sending message: ', error);
+                messages.value.push({
+                    role: 'ai', 
+                    content: 'Error: Unable to process request '
+                })
+            }finally {
+                isLoading.value = false;
+            }
+        
+    };
+
     // Expose state and actions from the store
-    return {messages, isLoading, loadChatHistory}
-})
+    return {messages, isLoading, loadChatHistory, sendMessage};
+});
