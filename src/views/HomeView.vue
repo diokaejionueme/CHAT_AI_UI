@@ -48,7 +48,7 @@ const createUser = async ()  => {
         <div class="p-8 bg-gray-800 rounded-lg shadow-lg w-full max-w-md">
             <img :src="robotImage" alt="" class="mx-auto w-24 h-24 mb-4" />
             <h1 class="text-2xl font-semibold mb-4 textcenter">
-                Welcome to Chat AI
+                Welcome to Dioka's Chat AI
             </h1>
 
             <input type="text" 
